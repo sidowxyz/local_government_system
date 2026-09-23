@@ -6,10 +6,6 @@ import {
   InfoIcon,
   CheckIcon,
   PencilIcon,
-  Building2Icon,
-  CarIcon,
-  BabyIcon,
-  BanknoteIcon,
 } from '../components/icons';
 import { Button } from '../components/Button';
 import { Checkbox } from '../components/Checkbox';
@@ -320,13 +316,6 @@ export function Roles() {
   const totalGrantedServices = useMemo(() => {
     return Object.values(stagedServices).filter((actions) => actions.length > 0).length;
   }, [stagedServices]);
-
-  const getServiceIcon = (dept: string) => {
-    if (dept.includes('Civil')) return BabyIcon;
-    if (dept.includes('Transport')) return CarIcon;
-    if (dept.includes('Finance')) return BanknoteIcon;
-    return Building2Icon;
-  };
 
   return (
     <section
@@ -908,7 +897,6 @@ export function Roles() {
                     {/* Service Cards List */}
                     <div className="min-h-0 flex-1 overflow-y-auto p-5 space-y-5">
                       {filteredServices.map((service) => {
-                        const Icon = getServiceIcon(service.department);
                         const granted = stagedServices[service.code] || [];
                         const isFull =
                           selectedRole.isSystem || granted.length === 20;
@@ -920,18 +908,10 @@ export function Roles() {
                           >
                             {/* Service Card Header */}
                             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-hairline bg-surface/50 p-4">
-                              <div className="flex items-center gap-3">
-                                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-hairline bg-white text-primary shadow-2xs">
-                                  <Icon className="h-5 w-5" />
-                                </div>
-                                <div>
-                                  <h3 className="text-body font-bold text-ink">
-                                    {service.name}
-                                  </h3>
-                                  <div className="mt-0.5 text-meta text-muted">
-                                    <span>{service.department}</span>
-                                  </div>
-                                </div>
+                              <div>
+                                <h3 className="text-body font-bold text-ink">
+                                  {service.name}
+                                </h3>
                               </div>
 
                               {/* Service Presets */}
@@ -1069,14 +1049,14 @@ export function Roles() {
                             setHasUnsavedChanges(true);
                             setSaveSuccessNotice(false);
                           }}
-                          className="mt-1 h-4 w-4 text-primary focus:ring-primary/20"
+                          className="mt-0.5 h-4 w-4 shrink-0 accent-primary"
                         />
                         <div>
                           <div className="text-body font-semibold text-ink">
-                            Every report its permissions already allow
+                            All permitted reports
                           </div>
                           <p className="mt-1 text-meta text-muted leading-relaxed">
-                            Including reports added later by a new service. This is how every role behaves unless you narrow it here.
+                            Includes reports added by future services.
                           </p>
                         </div>
                       </label>
@@ -1101,14 +1081,14 @@ export function Roles() {
                             setHasUnsavedChanges(true);
                             setSaveSuccessNotice(false);
                           }}
-                          className="mt-1 h-4 w-4 text-primary focus:ring-primary/20"
+                          className="mt-0.5 h-4 w-4 shrink-0 accent-primary"
                         />
                         <div>
                           <div className="text-body font-semibold text-ink">
-                            Only the reports ticked below
+                            Selected reports only
                           </div>
                           <p className="mt-1 text-meta text-muted leading-relaxed">
-                            Narrows what the permissions above allow. It can never grant a report the role has no permission for.
+                            Narrows access without granting new permissions.
                           </p>
                         </div>
                       </label>
